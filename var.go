@@ -10,13 +10,13 @@ const (
 	space = byte(' ')
 )
 
+var uint8arr [8]uint8
+
 // ErrBadStringFormat represents a error of input string's format is illegal .
 var ErrBadStringFormat = errors.New("bad string format")
 
 // ErrEmptyString represents a error of empty input string.
 var ErrEmptyString = errors.New("empty string")
-
-var uint8arr [8]uint8
 
 func init() {
 	uint8arr[0] = 128
