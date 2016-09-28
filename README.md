@@ -46,3 +46,5 @@ var b int16
 biu.ReadBinaryString("[1 0000 0011]", &b)
 fmt.Println(b) //259
 ```
+## LICENSE
+biu is is distributed under the terms of the MIT License.
