@@ -5,16 +5,14 @@ import (
 	"regexp"
 )
 
-// ByteToBinaryString get the string of a byte in binary format.
-// for example: 01100100
+// ByteToBinaryString get the string in binary format of a byte.
 func ByteToBinaryString(b byte) string {
 	buf := make([]byte, 0, 8)
 	buf = appendBinaryString(b, buf)
 	return string(buf)
 }
 
-// BytesToBinaryString get the string of a byte's slice in binary format.
-// for example: [00010010 01101001 01100100]
+// BytesToBinaryString get the string in binary format of a byte's slice.
 func BytesToBinaryString(bs []byte) string {
 	l := len(bs)
 	bl := l*8 + l + 1
@@ -28,13 +26,11 @@ func BytesToBinaryString(bs []byte) string {
 	return string(buf)
 }
 
-var rbDel = regexp.MustCompile(`[^01]`) // regex for delete useless string of binary format
+// regex for delete useless string which is going to be in binary format.
+var rbDel = regexp.MustCompile(`[^01]`)
 
 // BinaryStringToBytes get the binary bytes according to the
-// input string of binary format.
-// for example, inupt string is "[00001010 10101010 01001010]",
-// returns byte slice,whose length is 3 and if you print its'
-// value,it may be like this:[10, 170, 174]
+// input string which is in binary format.
 func BinaryStringToBytes(s string) (bs []byte) {
 	if len(s) == 0 {
 		panic(ErrEmptyString)
