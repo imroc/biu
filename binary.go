@@ -1,18 +1,15 @@
 package biu
 
-import (
-	"encoding/binary"
-	"regexp"
-)
+import "regexp"
 
-// ByteToBinaryString get the string in binary format of a byte.
+// ByteToBinaryString get the string in binary format of a byte or uint8.
 func ByteToBinaryString(b byte) string {
 	buf := make([]byte, 0, 8)
 	buf = appendBinaryString(buf, b)
 	return string(buf)
 }
 
-// BytesToBinaryString get the string in binary format of a byte's slice.
+// BytesToBinaryString get the string in binary format of a []byte or []int8.
 func BytesToBinaryString(bs []byte) string {
 	l := len(bs)
 	bl := l*8 + l + 1
@@ -38,15 +35,20 @@ func BinaryStringToBytes(s string) (bs []byte) {
 
 	s = rbDel.ReplaceAllString(s, "")
 	l := len(s)
-	if l == 0 || l%8 != 0 {
+	if l == 0 {
 		panic(ErrBadStringFormat)
 	}
 
-	bs = make([]byte, 0, l/8)
-
+	mo := l % 8
+	l /= 8
+	if mo != 0 {
+		l++
+	}
+	bs = make([]byte, 0, l)
+	mo = 8 - mo
 	var n uint8
 	for i, b := range []byte(s) {
-		m := i % 8
+		m := (i + mo) % 8
 		switch b {
 		case one:
 			n += uint8arr[m]
@@ -59,9 +61,20 @@ func BinaryStringToBytes(s string) (bs []byte) {
 	return
 }
 
-// UInt32ToBinaryString get the string of a uinit32 number in binary format.
-func UInt32ToBinaryString(i uint32) string {
-	bs := make([]byte, 4)
-	binary.BigEndian.PutUint32(bs, i)
-	return BytesToBinaryString(bs)
+// append bytes of string in binary format.
+func appendBinaryString(bs []byte, b byte) []byte {
+	var a byte
+	for i := 0; i < 8; i++ {
+		a = b
+		b <<= 1
+		b >>= 1
+		switch a {
+		case b:
+			bs = append(bs, zero)
+		default:
+			bs = append(bs, one)
+		}
+		b <<= 1
+	}
+	return bs
 }
