@@ -1,7 +1,7 @@
 package biu
 
 // append bytes of string in binary format.
-func appendBinaryStringOfByte(b byte, bs []byte) []byte {
+func appendBinaryString(b byte, bs []byte) []byte {
 	var a byte
 	for i := 0; i < 8; i++ {
 		a = b
