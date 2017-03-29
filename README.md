@@ -1,8 +1,8 @@
 Biu
 ==============
 biu is a golang binary util.
-you can convert bytes to diffrent string format(binary,hex,octal. support binary format only right now),
-even can convert your data(basic data type) to diffrent string format directly.
+you can convert bytes to different string format(binary,hex,octal. support binary format only right now),
+even can convert your data(basic data type) to different string format directly.
 And you can also convert a string in binary,hex or octal format to a data with data type whatever you wanted.
 
 
